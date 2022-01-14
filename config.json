@@ -1,0 +1,5 @@
+{
+    "API_URL" : "https://pokeapi.co/api/v2",
+    "REGEX" : "name[^,]*((at)[^,]*a|a[^,]*(at))[^,]*",
+    "POKEMON_LIMIT" : 1118  
+}

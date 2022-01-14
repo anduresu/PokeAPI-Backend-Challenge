@@ -1,5 +1,7 @@
 {
     "API_URL" : "https://pokeapi.co/api/v2",
     "REGEX" : "name[^,]*((at)[^,]*a|a[^,]*(at))[^,]*",
-    "POKEMON_LIMIT" : 1118  
+    "POKEMON_LIMIT" : 1118,
+    "GENERATION_INTERVAL" : [0, 151],
+    "POKEMON_TYPE" : "fighting"
 }

@@ -31,7 +31,7 @@ def update_limit():
     save_json(CONFIG_FILE, config)
 
 
-def query_names(limit):
+def query_pokemon_names(limit):
     """
     Requests all Pokemon names to the API and converts the JSON answer to text.
     :param limit: maximum amount of Pokemon names to fetch
@@ -39,11 +39,11 @@ def query_names(limit):
     """
     query_string = f'{API_URL}/pokemon/?limit={limit}'
     r = requests.get(query_string)
-    text = json.dumps(r.json())
-    return text
+    return r.json()
 
 
-def count_matches(regex, text):
+def count_matches(regex, data):
+    text = json.dumps(data)
     return int(len(re.findall(regex, text)))
 
 
@@ -75,3 +75,31 @@ def count_shared_egg_group_species(name):
     return length_egg_groups(egg_groups)
 
 
+def pokemon_id_from_url(url):
+    return int(re.search(r'\/(\d+)\/', url)[1])
+
+
+def query_pokemon_type_on_interval(pokemon_type, interval):
+    """
+    Obtains a list of names with Pokemons under interval from the given type.
+    :param pokemon_type: a pokemon type
+    :param interval: an array with two values [min_value, max_value]
+    :return: a list of Pokemon names
+    """
+    min_id, max_id = interval
+    query_string = f'{API_URL}/type/{pokemon_type}'
+    r = requests.get(query_string)
+    data = r.json()['pokemon']
+    pokemon_names = []
+    for d in data:
+        pokemon_id = pokemon_id_from_url(d['pokemon']['url'])
+        if (pokemon_id >= min_id) and (pokemon_id <= max_id):
+            pokemon_names.append(d['pokemon']['name'])
+    return pokemon_names
+
+
+def query_weight(name):
+    query_string = f'{API_URL}/pokemon/{name}'
+    r = requests.get(query_string)
+    weight = int(r.json()['weight'])
+    return weight

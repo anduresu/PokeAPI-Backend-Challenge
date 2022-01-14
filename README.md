@@ -14,7 +14,7 @@ Clonar repositorio e instalar dependencias:
 ```
 git clone git@github.com:anduresu/PokeAPI-Backend-Challenge.git
 mv PokeAPI-Backend-Challenge
-pip install -r requirements 
+pip install -r requirements.txt
 ```
 
 Realizar tests

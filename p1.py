@@ -1,5 +1,5 @@
-from pokequery import query_names
-from pokequery import count_matches
+from src.pokequery import query_names
+from src.pokequery import count_matches
 
 import json
 

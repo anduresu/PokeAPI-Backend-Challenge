@@ -45,3 +45,33 @@ def query_names(limit):
 
 def count_matches(regex, text):
     return int(len(re.findall(regex, text)))
+
+
+def length_egg_groups(egg_groups):
+    """
+    Creates a set with the Pokemon names from the egg groups and returns its length.
+    :param egg_groups: a list of egg group names.
+    :return: the number of Pokemons in all egg groups.
+    """
+    species = set()
+    for eg in egg_groups:
+        query_string = f'{API_URL}/egg-group/{eg}'
+        r = requests.get(query_string)
+        data = r.json()['pokemon_species']
+        for d in data:
+            species.add(d['name'])
+    return len(species)
+
+def count_shared_egg_group_species(name):
+    """
+    Counts the number of Pokemons with the same egg group as "name".
+    :param name: the name of a Pokemon
+    :return: the number of Pokemons with the same egg group.
+    """
+    query_string = f'{API_URL}/pokemon-species/{name}'
+    r = requests.get(query_string)
+    data = r.json()
+    egg_groups = [d['name'] for d in data['egg_groups']]
+    return length_egg_groups(egg_groups)
+
+
